@@ -18,28 +18,55 @@
 from tulip import control
 from tulip import directory
 from resources.lib.modules.tools import stream_picker
+from resources.lib import quality
 import streamlink.session
+
+# TODO: Add ability to set plugin options
 
 
 def router(url):
 
     try:
 
+        if '.mpd' in url:
+            return url
+
         session = streamlink.session.Streamlink()
 
         plugin = session.resolve_url(url)
         streams = plugin.get_streams()
 
-        keys = streams.keys()[::-1]
-        values = [u.url for u in streams.values()][::-1]
+        if quality is None:
 
-        if control.setting('quality.choice') == '1':
+            if control.setting('quality.choice') == '0':
 
-            return stream_picker(keys, values)
+                return streams['best'].url
+
+            else:
+
+                keys = streams.keys()[::-1]
+                values = [u.url for u in streams.values()][::-1]
+
+                return stream_picker(keys, values)
 
         else:
 
-            return streams['best'].url
+            if quality == 'manual':
+
+                keys = streams.keys()[::-1]
+                values = [u.url for u in streams.values()][::-1]
+
+                return stream_picker(keys, values)
+
+            else:
+
+                try:
+
+                    return streams[quality].url
+
+                except KeyError:
+
+                    return streams['best'].url
 
     except streamlink.session.NoPluginError:
 
@@ -52,4 +79,18 @@ def router(url):
 
 def play(url):
 
-    directory.resolve(router(url))
+    stream = router(url)
+
+    try:
+
+        if '.mpd' in stream:
+
+            directory.resolve(stream, dash=True)
+
+        else:
+
+            directory.resolve(stream)
+
+    except:
+
+        pass

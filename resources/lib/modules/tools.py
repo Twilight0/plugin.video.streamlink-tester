@@ -97,8 +97,7 @@ def clear_history(file_=history_file):
 
 def readme():
 
-    with open(control.join(control.addonPath, 'README.md')) as f:
-        text = f.read()
+    text = control.addonInfo('disclaimer')
 
     control.dialog.textviewer(control.name(), text=text)
 

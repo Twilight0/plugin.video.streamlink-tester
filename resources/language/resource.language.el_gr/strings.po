@@ -40,20 +40,20 @@ msgstr "Επιλογή ποιότητας"
 
 msgctxt "#30007"
 msgid "History size"
-msgstr ""
+msgstr "Μέγεθος ιστορικού"
 
 msgctxt "#30008"
-msgid "View README"
-msgstr ""
+msgid "View disclaimer"
+msgstr "Ανάγνωση αποποίησης ευθυνών"
 
 msgctxt "#30009"
 msgid "Add URL"
-msgstr ""
+msgstr "Προσθήκη URL"
 
 msgctxt "#30010"
 msgid "Clear history"
-msgstr ""
+msgstr "Εκκαθάριση ιστορικού"
 
 msgctxt "#30011"
 msgid "Done"
-msgstr ""
+msgstr "Εξετελέσθει"

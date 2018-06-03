@@ -19,3 +19,4 @@ from tulip.init import params
 
 action = params.get('action')
 url = params.get('url')
+quality = params.get('quality')

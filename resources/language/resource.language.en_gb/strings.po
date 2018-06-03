@@ -43,7 +43,7 @@ msgid "History size"
 msgstr ""
 
 msgctxt "#30008"
-msgid "View README"
+msgid "View disclaimer"
 msgstr ""
 
 msgctxt "#30009"
