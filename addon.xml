@@ -18,9 +18,10 @@
         <website>https://twitter.com/TwilightZer0</website>
         <source>https://github.com/Twilight0/plugin.video.streamlink-tester</source>
         <size>106257</size>
-        <news>[B]1.1.0[/B] - 03-06-2018
+        <news>[B]1.1.0[/B] - 04-06-2018
 - Added &amp;quality= plugin route call for manual quality selection (overrides setting in options)
 - Added MPEG-DASH playback capability
+- Added MPEG-DASH url output for resolved urls through streamlink
 - Improved README.md</news>
         <assets>
             <icon>icon.png</icon>

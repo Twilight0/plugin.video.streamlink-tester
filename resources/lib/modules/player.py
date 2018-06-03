@@ -34,39 +34,48 @@ def router(url):
         session = streamlink.session.Streamlink()
 
         plugin = session.resolve_url(url)
-        streams = plugin.get_streams()
+        streams = plugin.streams()
 
-        if quality is None:
+        if not streams:
+            return
 
-            if control.setting('quality.choice') == '0':
+        try:
 
-                return streams['best'].url
+            if quality is None:
 
-            else:
-
-                keys = streams.keys()[::-1]
-                values = [u.url for u in streams.values()][::-1]
-
-                return stream_picker(keys, values)
-
-        else:
-
-            if quality == 'manual':
-
-                keys = streams.keys()[::-1]
-                values = [u.url for u in streams.values()][::-1]
-
-                return stream_picker(keys, values)
-
-            else:
-
-                try:
-
-                    return streams[quality].url
-
-                except KeyError:
+                if control.setting('quality.choice') == '0':
 
                     return streams['best'].url
+
+                else:
+
+                    keys = streams.keys()[::-1]
+                    values = [u.url for u in streams.values()][::-1]
+
+                    return stream_picker(keys, values)
+
+            else:
+
+                if quality == 'manual':
+
+                    keys = streams.keys()[::-1]
+                    values = [u.url for u in streams.values()][::-1]
+
+                    return stream_picker(keys, values)
+
+                else:
+
+                    try:
+
+                        return streams[quality].url
+
+                    except KeyError:
+
+                        return streams['best'].url
+
+        except AttributeError:
+
+            return streams['best'].mpd.url
 
     except streamlink.session.NoPluginError:
 
