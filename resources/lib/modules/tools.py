@@ -37,7 +37,6 @@ def trim_history(file_=history_file):
 
     """
     Trims history to what is set in settings
-    :return:
     """
 
     f = open(file_, 'r')
@@ -48,7 +47,7 @@ def trim_history(file_=history_file):
         f = open(file_, 'w')
         dif = history_size - len(text)
         result = text[:dif]
-        f.write('\n'.join(result) + '\n')
+        f.write('\n'.join(result))
         f.close()
 
 
@@ -59,11 +58,13 @@ def add_to_history(file_=history_file):
 
     txt = control.dialog.input(control.name())
 
-    with open(file_, 'a') as f:
-        f.writelines(txt + '\n')
+    if txt not in read_from_history():
 
-    trim_history(file_)
-    refresh()
+        with open(file_, 'a') as f:
+            f.writelines(txt + '\n')
+
+        trim_history(file_)
+        refresh()
 
 
 def read_from_history(file_=history_file):
@@ -85,6 +86,19 @@ def read_from_history(file_=history_file):
         return
 
 
+def delete_from_history(txt, file_=history_file):
+
+    with open(file_, 'r') as f:
+        text = [i.rstrip('\n') for i in f.readlines()]
+
+    text.remove(txt)
+
+    with open(file_, 'w') as f:
+        f.write('\n'.join(text))
+
+    refresh()
+
+
 def clear_history(file_=history_file):
 
     if control.exists(file_):
@@ -93,6 +107,7 @@ def clear_history(file_=history_file):
             f.write('')
 
     control.infoDialog(control.lang(30011))
+    refresh()
 
 
 def readme():

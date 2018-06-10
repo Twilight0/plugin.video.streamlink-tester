@@ -20,3 +20,6 @@ from tulip.init import params
 action = params.get('action')
 url = params.get('url')
 quality = params.get('quality')
+query = params.get('query')
+title = params.get('title')
+# options = params.get('options')

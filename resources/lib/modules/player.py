@@ -15,13 +15,18 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-from tulip import control
-from tulip import directory
+try:
+    from urllib import quote
+except ImportError:
+    from urllib.parse import quote
+
+
+from tulip import control, directory
 from resources.lib.modules.tools import stream_picker
 from resources.lib import quality
 import streamlink.session
 
-# TODO: Add ability to set plugin options
+# TODO: Add ability to set plugin and session options
 
 
 def router(url):
@@ -32,50 +37,64 @@ def router(url):
             return url
 
         session = streamlink.session.Streamlink()
+        # session.set_plugin_option('', '', '')
 
         plugin = session.resolve_url(url)
+        # plugin.set_option()
         streams = plugin.streams()
 
         if not streams:
-            return
+            return url
 
-        try:
+        args = streams['best'].args
 
-            if quality is None:
+        if 'headers' in args and control.setting('args.append') == 'true':
+            user_agent = quote(streams['best'].args['headers'].get('User-Agent', ''))
+            referer = quote(streams['best'].args['headers'].get('Referer', ''))
+            if user_agent and referer:
+                append = '|User-Agent={0}&Referer={1}'.format(user_agent, referer)
+            elif user_agent:
+                append = '|User-Agent={0}'.format(user_agent)
+            elif referer:
+                append = '|Referer={0}'.format(referer)
+            else:
+                append = ''
+        else:
+            append = ''
 
-                if control.setting('quality.choice') == '0':
+        if quality is None:
 
-                    return streams['best'].url
+            if control.setting('quality.choice') == '0':
 
-                else:
+                playable = streams['best'].to_url() + append
 
-                    keys = streams.keys()[::-1]
-                    values = [u.url for u in streams.values()][::-1]
-
-                    return stream_picker(keys, values)
+                return playable
 
             else:
 
-                if quality == 'manual':
+                keys = streams.keys()[::-1]
+                values = [u.to_url() + append for u in streams.values()][::-1]
 
-                    keys = streams.keys()[::-1]
-                    values = [u.url for u in streams.values()][::-1]
+                return stream_picker(keys, values)
 
-                    return stream_picker(keys, values)
+        else:
 
-                else:
+            if quality == 'manual':
 
-                    try:
+                keys = streams.keys()[::-1]
+                values = [u.to_url() + append for u in streams.values()][::-1]
 
-                        return streams[quality].url
+                return stream_picker(keys, values)
 
-                    except KeyError:
+            else:
 
-                        return streams['best'].url
+                try:
 
-        except AttributeError:
+                    return streams[quality].to_url() + append
 
-            return streams['best'].mpd.url
+                except KeyError:
+
+                    return streams['best'].to_url() + append
 
     except streamlink.session.NoPluginError:
 
@@ -83,7 +102,7 @@ def router(url):
 
     except streamlink.session.PluginError as e:
 
-        control.infoDialog(e)
+        control.infoDialog(e, time=5000)
 
 
 def play(url):

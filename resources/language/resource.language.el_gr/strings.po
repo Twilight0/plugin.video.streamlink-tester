@@ -57,3 +57,15 @@ msgstr "Εκκαθάριση ιστορικού"
 msgctxt "#30011"
 msgid "Done"
 msgstr "Εξετελέσθει"
+
+msgctxt "#30012"
+msgid "Allow streamlink to append headers"
+msgstr "Επέτρεψε το streamlink να προσθέτει κεφαλίδες"
+
+msgctxt "#30013"
+msgid "Delete this url"
+msgstr "Διαγραφή αυτού του url"
+
+msgctxt "#30014"
+msgid ""
+msgstr ""
