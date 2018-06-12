@@ -58,6 +58,9 @@ def add_to_history(file_=history_file):
 
     txt = control.dialog.input(control.name())
 
+    if not txt:
+        return
+
     if txt not in read_from_history():
 
         with open(file_, 'a') as f:
@@ -94,7 +97,7 @@ def delete_from_history(txt, file_=history_file):
     text.remove(txt)
 
     with open(file_, 'w') as f:
-        f.write('\n'.join(text))
+        f.write('\n'.join(text) + '\n')
 
     refresh()
 
