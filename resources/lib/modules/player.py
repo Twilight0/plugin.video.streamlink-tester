@@ -46,20 +46,26 @@ def router(url):
         if not streams:
             return url
 
-        args = streams['best'].args
+        try:
 
-        if 'headers' in args and control.setting('args.append') == 'true':
-            user_agent = quote(streams['best'].args['headers'].get('User-Agent', ''))
-            referer = quote(streams['best'].args['headers'].get('Referer', ''))
-            if user_agent and referer:
-                append = '|User-Agent={0}&Referer={1}'.format(user_agent, referer)
-            elif user_agent:
-                append = '|User-Agent={0}'.format(user_agent)
-            elif referer:
-                append = '|Referer={0}'.format(referer)
+            args = streams['best'].args
+
+            if 'headers' in args and control.setting('args.append') == 'true':
+                user_agent = quote(streams['best'].args['headers'].get('User-Agent', ''))
+                referer = quote(streams['best'].args['headers'].get('Referer', ''))
+                if user_agent and referer:
+                    append = '|User-Agent={0}&Referer={1}'.format(user_agent, referer)
+                elif user_agent:
+                    append = '|User-Agent={0}'.format(user_agent)
+                elif referer:
+                    append = '|Referer={0}'.format(referer)
+                else:
+                    append = ''
             else:
                 append = ''
-        else:
+
+        except AttributeError:
+
             append = ''
 
         if quality is None:

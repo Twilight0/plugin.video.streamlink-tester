@@ -1,3 +1,6 @@
+[B]1.2.2[/B] - 20-06-2018
+- Except gracefull when no args attribute is present.
+
 [B]1.2.1[/B] - 12-06-2018
 - Do not allow addition to history when empty string given
 - Fixed removal of new line when removing individual links
