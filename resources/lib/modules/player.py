@@ -15,13 +15,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-try:
-    from urllib import quote
-except ImportError:
-    from urllib.parse import quote
-
-
+import json
+from tulip.compat import quote, urlencode
 from tulip import control, directory
+from tulip.log import log_debug
 from resources.lib.modules.tools import stream_picker
 from resources.lib import quality
 import streamlink.session
@@ -43,6 +40,12 @@ def router(url):
         # plugin.set_option()
         streams = plugin.streams()
 
+        try:
+            json_list = [streams[i].json for i in streams.keys()]
+            [log_debug(j) for j in json_list]
+        except AttributeError:
+            pass
+
         if not streams:
             return url
 
@@ -50,17 +53,11 @@ def router(url):
 
             args = streams['best'].args
 
-            if 'headers' in args and control.setting('args.append') == 'true':
-                user_agent = quote(streams['best'].args['headers'].get('User-Agent', ''))
-                referer = quote(streams['best'].args['headers'].get('Referer', ''))
-                if user_agent and referer:
-                    append = '|User-Agent={0}&Referer={1}'.format(user_agent, referer)
-                elif user_agent:
-                    append = '|User-Agent={0}'.format(user_agent)
-                elif referer:
-                    append = '|Referer={0}'.format(referer)
-                else:
-                    append = ''
+            append = '|'
+
+            if 'headers' in args:
+                headers = quote(streams['best'].args['headers'])
+                append += urlencode(headers)
             else:
                 append = ''
 
@@ -115,11 +112,27 @@ def play(url):
 
     stream = router(url)
 
+    dash = ('.mpd' in stream or 'dash' in stream or '.ism' in stream or '.hls' in stream)
+
+    if dash:
+
+        if '.hls' in stream:
+            manifest_type = 'hls'
+        elif '.ism' in stream:
+            manifest_type = 'ism'
+        else:
+            manifest_type = 'mpd'
+
+        log_debug('Activating MPEG-DASH for this url: ' + stream)
+
+    else:
+        manifest_type = ''
+
     try:
 
         if '.mpd' in stream:
 
-            directory.resolve(stream, dash=True)
+            directory.resolve(stream, dash=dash, manifest_type=manifest_type)
 
         else:
 
