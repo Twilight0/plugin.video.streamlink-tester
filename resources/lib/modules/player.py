@@ -46,6 +46,8 @@ def router(url):
         except AttributeError:
             pass
 
+        # TODO: Use json object exclusively on next version to obtain all items
+
         if not streams:
             return url
 
@@ -56,7 +58,7 @@ def router(url):
             append = '|'
 
             if 'headers' in args:
-                headers = quote(streams['best'].args['headers'])
+                headers = streams['best'].args['headers']
                 append += urlencode(headers)
             else:
                 append = ''

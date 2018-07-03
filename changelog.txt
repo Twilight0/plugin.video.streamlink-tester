@@ -1,3 +1,6 @@
+[B]1.2.3[/B] - 03-07-2018
+- Do not use quote for building custom headers
+
 [B]1.2.3[/B] - 02-07-2018
 - Better handling of headers appending
 - Log json objects for debugging purposes
