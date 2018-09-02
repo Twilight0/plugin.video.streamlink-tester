@@ -15,8 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import json
-from tulip.compat import quote, urlencode
+from tulip.compat import urlencode
 from tulip import control, directory
 from tulip.log import log_debug
 from resources.lib.modules.tools import stream_picker
@@ -33,7 +32,9 @@ def router(url):
         if '.mpd' in url:
             return url
 
+        custom_plugins = control.join(control.addonPath, 'resources', 'lib', 'resolvers')
         session = streamlink.session.Streamlink()
+        session.load_plugins(custom_plugins)
         # session.set_plugin_option('', '', '')
 
         plugin = session.resolve_url(url)
@@ -42,7 +43,7 @@ def router(url):
 
         try:
             json_list = [streams[i].json for i in streams.keys()]
-            [log_debug(j) for j in json_list]
+            [log_debug(repr(j)) for j in json_list]
         except AttributeError:
             pass
 

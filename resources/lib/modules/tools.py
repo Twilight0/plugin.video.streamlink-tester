@@ -86,7 +86,7 @@ def read_from_history(file_=history_file):
 
     else:
 
-        return
+        return ''
 
 
 def delete_from_history(txt, file_=history_file):

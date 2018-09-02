@@ -1,3 +1,6 @@
+[B]1.2.5[/B] - 03-09-2018
+- Various fixes
+
 [B]1.2.3[/B] - 03-07-2018
 - Do not use quote for building custom headers
 
