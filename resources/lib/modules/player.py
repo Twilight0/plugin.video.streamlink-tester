@@ -44,10 +44,8 @@ def router(url):
         try:
             json_list = [streams[i].json for i in streams.keys()]
             [log_debug(repr(j)) for j in json_list]
-        except AttributeError:
+        except Exception:
             pass
-
-        # TODO: Use json object exclusively on next version to obtain all items
 
         if not streams:
             return url

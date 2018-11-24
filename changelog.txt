@@ -1,3 +1,7 @@
+[B]1.2.6[/B] - 24-11-2018
+- Removed kineskop.tv test plugin
+- Made exception broader when trying to load json object as it may not exist
+
 [B]1.2.5[/B] - 03-09-2018
 - Various fixes
 
