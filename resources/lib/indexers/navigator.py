@@ -31,13 +31,20 @@ def root():
     urls = tools.read_from_history()
 
     if not urls:
+
         directory.add(null)
+
     else:
+
         menu = [{'title': url, 'action': 'play', 'isFolder': 'False', 'url': url} for url in urls]
+
         for m in menu:
+
             add_cm = {'title': 30009, 'query': {'action': 'add'}}
             refresh_cm = {'title': 30005, 'query': {'action': 'refresh'}}
             clear_cm = {'title': 30010, 'query': {'action': 'clear_history'}}
             clear_fm_h_cm = {'title': 30013, 'query': {'action': 'delete_from_history', 'query': m['url']}}
+
             m.update({'cm': [add_cm, refresh_cm, clear_cm, clear_fm_h_cm]})
+
         directory.add(menu)

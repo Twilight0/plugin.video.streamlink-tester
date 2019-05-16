@@ -113,12 +113,20 @@ def play(url):
 
     stream = router(url)
 
-    dash = ('.mpd' in stream or 'dash' in stream or '.ism' in stream or '.hls' in stream)
+    try:
+        isa_enabled = control.addon_details('inputstream.adaptive').get('enabled')
+    except KeyError:
+        isa_enabled = False
+
+    dash = ('.mpd' in stream or 'dash' in stream or '.ism' in stream or '.hls' in stream or '.m3u8' in stream) and isa_enabled
+
+    mimetype = None
 
     if dash:
 
-        if '.hls' in stream:
+        if '.hls' in stream or 'm3u8' in stream:
             manifest_type = 'hls'
+            mimetype = 'application/vnd.apple.mpegurl'
         elif '.ism' in stream:
             manifest_type = 'ism'
         else:
@@ -126,19 +134,8 @@ def play(url):
 
         log_debug('Activating MPEG-DASH for this url: ' + stream)
 
+        directory.resolve(stream, dash=dash, manifest_type=manifest_type, mimetype=mimetype)
+
     else:
-        manifest_type = ''
 
-    try:
-
-        if '.mpd' in stream:
-
-            directory.resolve(stream, dash=dash, manifest_type=manifest_type)
-
-        else:
-
-            directory.resolve(stream)
-
-    except:
-
-        pass
+        directory.resolve(stream)

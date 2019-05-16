@@ -97,7 +97,11 @@ def delete_from_history(txt, file_=history_file):
     text.remove(txt)
 
     with open(file_, 'w') as f:
-        f.write('\n'.join(text) + '\n')
+        if not text:
+            text = ''
+        else:
+            text = '\n'.join(text) + '\n'
+        f.write(text)
 
     refresh()
 
