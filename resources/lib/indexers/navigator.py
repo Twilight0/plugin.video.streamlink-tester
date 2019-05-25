@@ -44,7 +44,8 @@ def root():
             refresh_cm = {'title': 30005, 'query': {'action': 'refresh'}}
             clear_cm = {'title': 30010, 'query': {'action': 'clear_history'}}
             clear_fm_h_cm = {'title': 30013, 'query': {'action': 'delete_from_history', 'query': m['url']}}
+            set_title_cm = {'title': 30014, 'query': {'action': 'play', 'query': 'custom', 'url': m['url']}}
 
-            m.update({'cm': [add_cm, refresh_cm, clear_cm, clear_fm_h_cm]})
+            m.update({'cm': [add_cm, refresh_cm, clear_cm, clear_fm_h_cm, set_title_cm]})
 
         directory.add(menu)

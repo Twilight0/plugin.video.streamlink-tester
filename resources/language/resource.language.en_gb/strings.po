@@ -67,5 +67,5 @@ msgid "Delete this url"
 msgstr ""
 
 msgctxt "#30014"
-msgid ""
+msgid "Set title and play"
 msgstr ""

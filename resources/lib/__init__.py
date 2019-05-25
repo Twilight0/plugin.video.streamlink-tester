@@ -14,12 +14,3 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
-
-from tulip.init import params
-
-action = params.get('action')
-url = params.get('url')
-quality = params.get('quality')
-query = params.get('query')
-title = params.get('title')
-# options = params.get('options')

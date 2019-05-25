@@ -109,7 +109,11 @@ def router(url):
         control.infoDialog(e, time=5000)
 
 
-def play(url):
+def play(url, meta=None):
+
+    if meta:
+
+        control.busy()
 
     stream = router(url)
 
@@ -121,6 +125,16 @@ def play(url):
     dash = ('.mpd' in stream or 'dash' in stream or '.ism' in stream or '.hls' in stream or '.m3u8' in stream) and isa_enabled
 
     mimetype = None
+
+    if isinstance(meta, dict):
+
+        control.idle()
+
+        if meta['title'] == 'custom':
+
+            title = control.inputDialog()
+
+            meta['title'] = title
 
     if dash:
 
@@ -134,8 +148,8 @@ def play(url):
 
         log_debug('Activating MPEG-DASH for this url: ' + stream)
 
-        directory.resolve(stream, dash=dash, manifest_type=manifest_type, mimetype=mimetype)
+        directory.resolve(stream, meta=meta, dash=dash, manifest_type=manifest_type, mimetype=mimetype, resolved_mode=meta is None)
 
     else:
 
-        directory.resolve(stream)
+        directory.resolve(stream, meta=meta, resolved_mode=meta is None)

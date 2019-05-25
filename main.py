@@ -16,7 +16,14 @@
         along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-from resources.lib import action, url, query
+from tulip.init import params
+
+action = params.get('action')
+url = params.get('url')
+quality = params.get('quality')
+query = params.get('query')
+title = params.get('title')
+# options = params.get('options')
 
 
 if action is None:
@@ -25,7 +32,9 @@ if action is None:
 
 elif action == 'play':
     from resources.lib.modules import player
-    player.play(url)
+    if query:
+        query = {'title': query}
+    player.play(url, query)
 
 elif action == 'add':
     from resources.lib.modules import tools

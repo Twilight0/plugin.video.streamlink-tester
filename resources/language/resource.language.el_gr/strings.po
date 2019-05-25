@@ -67,5 +67,5 @@ msgid "Delete this url"
 msgstr "Διαγραφή αυτού του url"
 
 msgctxt "#30014"
-msgid ""
-msgstr ""
+msgid "Set title and play"
+msgstr "Όρισε τίτλο και παίξτο"
