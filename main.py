@@ -34,7 +34,7 @@ elif action == 'play':
     from resources.lib.modules import player
     if query:
         query = {'title': query}
-    player.play(url, query)
+    player.play(url, query, quality)
 
 elif action == 'add':
     from resources.lib.modules import tools

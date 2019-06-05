@@ -15,17 +15,17 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
+import traceback, sys
 from tulip.compat import urlencode
 from tulip import control, directory
 from tulip.log import log_debug
 from resources.lib.modules.tools import stream_picker
-from resources.lib import quality
 import streamlink.session
 
 # TODO: Add ability to set plugin and session options
 
 
-def router(url):
+def resolver(url, quality=None):
 
     try:
 
@@ -58,6 +58,14 @@ def router(url):
 
             if 'headers' in args:
                 headers = streams['best'].args['headers']
+                try:
+                    del headers['url']
+                    del headers['Connection']
+                    del headers['Accept-Encoding']
+                    del headers['Accept']
+                    del headers['type']
+                except KeyError:
+                    pass
                 append += urlencode(headers)
             else:
                 append = ''
@@ -106,16 +114,20 @@ def router(url):
 
     except streamlink.session.PluginError as e:
 
+        _, __, tb = sys.exc_info()
+
+        print traceback.print_tb(tb)
+
         control.infoDialog(e, time=5000)
 
 
-def play(url, meta=None):
+def play(url, meta=None, quality=None):
 
     if meta:
 
         control.busy()
 
-    stream = router(url)
+    stream = resolver(url, quality)
 
     try:
         isa_enabled = control.addon_details('inputstream.adaptive').get('enabled')
@@ -136,7 +148,7 @@ def play(url, meta=None):
 
             meta['title'] = title
 
-    if dash:
+    if dash and control.setting('disable_mpd') == 'false':
 
         if '.hls' in stream or 'm3u8' in stream:
             manifest_type = 'hls'

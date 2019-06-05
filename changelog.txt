@@ -1,3 +1,8 @@
+[B]1.4.2[/B] - 05-06-2019
+- Bug fixes
+- Removal of possibly redundant headers
+- Added setting to disable inputstream arguments
+
 [B]1.4.1[/B] - 25-05-2019
 - Added "set title and play" context menu item
 - Various other tweaks

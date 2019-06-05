@@ -69,3 +69,7 @@ msgstr "Διαγραφή αυτού του url"
 msgctxt "#30014"
 msgid "Set title and play"
 msgstr "Όρισε τίτλο και παίξτο"
+
+msgctxt "#30015"
+msgid "Disable inputstream arguments"
+msgstr "Απενεργοποίηση εντολών για inputstream"
