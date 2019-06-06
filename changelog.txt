@@ -1,3 +1,6 @@
+[B]1.4.4[/B] - 06-06-2019
+- Various tweaks for efficiency
+
 [B]1.4.3[/B] - 06-06-2019
 - Added capability to load headers also from stream json object
 

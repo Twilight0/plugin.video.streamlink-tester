@@ -50,32 +50,39 @@ def resolver(url, quality=None):
                 args = streams['best'].args
             except Exception:
                 args = None
+
             try:
                 json_dict = json.loads(streams['best'].json)
             except Exception:
                 json_dict = None
 
-            append = '|'
+            for h in args, json_dict:
 
-            if json_dict:
-
-                try:
-                    headers = json_dict['headers']
-                except KeyError:
+                if 'headers' in h:
+                    headers = h['headers']
+                    break
+                else:
                     headers = None
 
-            elif args:
+            # if json_dict:
+            #
+            #     try:
+            #         headers = json_dict['headers']
+            #     except KeyError:
+            #         headers = None
+            #
+            # elif args:
+            #
+            #     try:
+            #         headers = args['headers']
+            #     except KeyError:
+            #         headers = None
+            #
+            # else:
+            #
+            #     headers = None
 
-                try:
-                    headers = streams['best'].args['headers']
-                except KeyError:
-                    headers = None
-
-            else:
-
-                headers = None
-
-            if headers:
+            if headers and control.setting('args_append') == 'true':
 
                 try:
                     del headers['Connection']
@@ -84,7 +91,7 @@ def resolver(url, quality=None):
                 except KeyError:
                     pass
 
-                append += urlencode(headers)
+                append = ''.join(['|', urlencode(headers)])
 
             else:
 
@@ -96,7 +103,7 @@ def resolver(url, quality=None):
 
         if quality is None:
 
-            if control.setting('quality.choice') == '0':
+            if control.setting('quality_choice') == '0':
 
                 playable = streams['best'].to_url() + append
 

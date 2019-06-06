@@ -18,7 +18,7 @@
 from tulip import control
 
 
-history_size = int(control.setting('history.size'))
+history_size = int(control.setting('history_size'))
 history_file = control.join(control.dataPath, 'urls.lst')
 
 
