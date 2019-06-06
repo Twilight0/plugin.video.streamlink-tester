@@ -15,7 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import traceback, sys
+import traceback, sys, json
 from tulip.compat import urlencode
 from tulip import control, directory
 from tulip.log import log_debug
@@ -41,33 +41,53 @@ def resolver(url, quality=None):
         # plugin.set_option()
         streams = plugin.streams()
 
-        try:
-            json_list = [streams[i].json for i in streams.keys()]
-            [log_debug(repr(j)) for j in json_list]
-        except Exception:
-            pass
-
         if not streams:
             return url
 
         try:
 
-            args = streams['best'].args
+            try:
+                args = streams['best'].args
+            except Exception:
+                args = None
+            try:
+                json_dict = json.loads(streams['best'].json)
+            except Exception:
+                json_dict = None
 
             append = '|'
 
-            if 'headers' in args:
-                headers = streams['best'].args['headers']
+            if json_dict:
+
                 try:
-                    del headers['url']
+                    headers = json_dict['headers']
+                except KeyError:
+                    headers = None
+
+            elif args:
+
+                try:
+                    headers = streams['best'].args['headers']
+                except KeyError:
+                    headers = None
+
+            else:
+
+                headers = None
+
+            if headers:
+
+                try:
                     del headers['Connection']
                     del headers['Accept-Encoding']
                     del headers['Accept']
-                    del headers['type']
                 except KeyError:
                     pass
+
                 append += urlencode(headers)
+
             else:
+
                 append = ''
 
         except AttributeError:
