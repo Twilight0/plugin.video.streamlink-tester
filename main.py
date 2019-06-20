@@ -23,6 +23,7 @@ url = params.get('url')
 quality = params.get('quality')
 query = params.get('query')
 title = params.get('title')
+image = params.get('image')
 # options = params.get('options')
 
 
@@ -32,9 +33,9 @@ if action is None:
 
 elif action == 'play':
     from resources.lib.modules import player
-    if query:
-        query = {'title': query}
-    player.play(url, query, quality)
+    if title or query:
+        query = {'title': title if title else query}
+    player.play(url, query, quality, image)
 
 elif action == 'add':
     from resources.lib.modules import tools

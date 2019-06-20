@@ -148,7 +148,7 @@ def resolver(url, quality=None):
         control.infoDialog(e, time=5000)
 
 
-def play(url, meta=None, quality=None):
+def play(url, meta=None, quality=None, image=None):
 
     if meta:
 
@@ -165,11 +165,11 @@ def play(url, meta=None, quality=None):
 
     mimetype = None
 
+    control.idle()
+
     if isinstance(meta, dict):
 
-        control.idle()
-
-        if meta['title'] == 'custom':
+        if meta['title'] == 'input':
 
             title = control.inputDialog()
 
@@ -187,8 +187,13 @@ def play(url, meta=None, quality=None):
 
         log_debug('Activating MPEG-DASH for this url: ' + stream)
 
-        directory.resolve(stream, meta=meta, dash=dash, manifest_type=manifest_type, mimetype=mimetype, resolved_mode=meta is None)
+        directory.resolve(
+            stream, meta=meta, icon=image, dash=dash, manifest_type=manifest_type, mimetype=mimetype,
+            resolved_mode=meta is None
+        )
 
     else:
 
-        directory.resolve(stream, meta=meta, resolved_mode=meta is None)
+        directory.resolve(
+            stream, meta=meta, icon=image, resolved_mode=meta is None
+        )
