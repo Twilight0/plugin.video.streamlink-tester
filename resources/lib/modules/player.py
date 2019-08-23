@@ -58,10 +58,13 @@ def resolver(url, quality=None):
 
             for h in args, json_dict:
 
-                if 'headers' in h:
-                    headers = h['headers']
-                    break
-                else:
+                try:
+                    if 'headers' in h:
+                        headers = h['headers']
+                        break
+                    else:
+                        headers = None
+                except Exception:
                     headers = None
 
             # if json_dict:
