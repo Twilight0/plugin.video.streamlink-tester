@@ -33,8 +33,8 @@ if action is None:
 
 elif action == 'play':
     from resources.lib.modules import player
-    if title or query:
-        query = {'title': title if title else query}
+    if query:
+        query = {'title': query}
     player.play(url, query, quality, image)
 
 elif action == 'add':
@@ -46,8 +46,8 @@ elif action == 'readme':
     tools.readme()
 
 elif action == 'refresh':
-    from resources.lib.modules import tools
-    tools.refresh()
+    from tulip.control import refresh
+    refresh()
 
 elif action == 'clear_history':
     from resources.lib.modules import tools

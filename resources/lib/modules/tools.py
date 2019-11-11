@@ -67,7 +67,8 @@ def add_to_history(file_=history_file):
             f.writelines(txt + '\n')
 
         trim_history(file_)
-        refresh()
+        control.sleep(200)
+        control.refresh()
 
 
 def read_from_history(file_=history_file):
@@ -103,7 +104,8 @@ def delete_from_history(txt, file_=history_file):
             text = '\n'.join(text) + '\n'
         f.write(text)
 
-    refresh()
+    control.sleep(200)
+    control.refresh()
 
 
 def clear_history(file_=history_file):
@@ -114,7 +116,8 @@ def clear_history(file_=history_file):
             f.write('')
 
     control.infoDialog(control.lang(30011))
-    refresh()
+    control.sleep(200)
+    control.refresh()
 
 
 def readme():
@@ -122,8 +125,3 @@ def readme():
     text = control.addonInfo('disclaimer')
 
     control.dialog.textviewer(control.name(), text=text)
-
-
-def refresh():
-
-    control.refresh()

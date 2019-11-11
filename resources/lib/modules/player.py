@@ -168,7 +168,9 @@ def play(url, meta=None, quality=None, image=None):
 
     mimetype = None
 
-    control.idle()
+    if meta:
+
+        control.idle()
 
     if isinstance(meta, dict):
 
