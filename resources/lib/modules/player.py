@@ -14,12 +14,13 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
+from __future__ import print_function
 
 import traceback, sys, json
 from tulip.compat import urlencode
 from tulip import control, directory
 from tulip.log import log_debug
-from resources.lib.modules.tools import stream_picker
+from .tools import stream_picker
 import streamlink.session
 
 # TODO: Add ability to set plugin and session options
@@ -38,7 +39,6 @@ def resolver(url, quality=None):
         # session.set_plugin_option('', '', '')
 
         plugin = session.resolve_url(url)
-        # plugin.set_option()
         streams = plugin.streams()
 
         if not streams:
@@ -140,13 +140,15 @@ def resolver(url, quality=None):
 
     except streamlink.session.NoPluginError:
 
+        log_debug('Did not find matching plugin')
+
         return url
 
     except streamlink.session.PluginError as e:
 
         _, __, tb = sys.exc_info()
 
-        print traceback.print_tb(tb)
+        print(traceback.print_tb(tb))
 
         control.infoDialog(e, time=5000)
 
