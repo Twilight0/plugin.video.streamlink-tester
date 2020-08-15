@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.streamlink-tester" name="Streamlink Tester" version="1.5.3" provider-name="Twilight0">
+<addon id="plugin.video.streamlink-tester" name="Streamlink Tester" version="1.5.4" provider-name="Twilight0">
     <requires>
         <import addon="xbmc.python" version="2.26.0"/>
         <import addon="script.module.tulip" version="2.5.10"/>
         <import addon="script.module.streamlink.base" version="2020.02.22"/>
-        <import addon="script.module.youtube.dl" version="18.619.0" optional="true"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="main.py">
         <provides>video</provides>
@@ -12,15 +11,22 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <reuselanguageinvoker>false</reuselanguageinvoker>
-        <summary lang="en">Streamlink and MPEG-DASH Tester</summary>
+        <summary lang="en_GB">Streamlink and MPEG-DASH Tester</summary>
         <description lang="en_GB">This addon can play and test various video and audio content from various sources supported by Streamlink resolver library. It can also playback MPEG-DASH streams.</description>
         <disclaimer lang="en_GB">This addon does not provide any content, its sole purpose is to resolve web urls with the help of Streamlink resolver library</disclaimer>
+        <summary lang="el_GR">Δοκιμαστής για Streamlink και MPEG-DASH</summary>
+        <description lang="el_GR">Το πρόσθετο αυτό μπορεί να αναπαράγει και να δοκιμάσει περιεχόμενο βίντεο και ήχου από διάφορες πηγές μέσω της βιβλιοθήκης streamlink. Επίσης μπορεί να αναπαράξει ροές MPEG-DASH.</description>
+        <disclaimer lang="el_GR">Το πρόσθετο αυτό δεν παρέχει απολύτως κανένα περιεχόμενο, ο μοναδικός σκοπός είναι να επιλύσει ιστοσελίδες με την βοήθεια του streamlink.</disclaimer>
         <language>en</language>
-        <license>GNU GPL, version 2</license>
+        <license>GPL-3.0-only</license>
         <website>https://twitter.com/TwilightZer0</website>
         <source>https://github.com/Twilight0/plugin.video.streamlink-tester</source>
         <size>106257</size>
-        <news>[B]1.5.3[/B] - 01-03-2020
+        <news>[B]1.5.4[/B] - 15-08-2020
+- Minor tweak in the addon.xml
+- Removed optional dependency of youtube-dl
+
+[B]1.5.3[/B] - 01-03-2020
 - Some logging tweaks
 
 [B]1.5.2[/B] - 11-11-2019
